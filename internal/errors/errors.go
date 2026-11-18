@@ -20,6 +20,9 @@ func (e *FieldError) Error() string {
 //
 // TODO: верните true только для nil-ошибки.
 func IsNil(err error) bool {
+	if err == nil {
+		return true
+	}
 	return false
 }
 
@@ -28,6 +31,9 @@ func IsNil(err error) bool {
 // TODO: если value пустая строка, верните *FieldError с указанным field
 // и причиной "is required". Для непустого значения верните nil.
 func RequireText(field, value string) error {
+	if value == "" {
+		return &FieldError{Field: field, Reason: "is required"}
+	}
 	return nil
 }
 
@@ -36,6 +42,9 @@ func RequireText(field, value string) error {
 // TODO: положительное число считается корректным. Для нуля и отрицательных
 // значений верните *FieldError с причиной "must be positive".
 func ValidatePositive(field string, value int) error {
+	if value <= 0 {
+		return &FieldError{Field: field, Reason: "must be positive"}
+	}
 	return nil
 }
 
